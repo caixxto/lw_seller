@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:lw_seller/account_manager/settings.dart';
+import 'package:lw_seller/settings/settings.dart';
 import 'package:meta/meta.dart';
 
 part 'seller_event.dart';

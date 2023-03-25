@@ -1,4 +1,4 @@
-import 'package:lw_seller/account_manager/settings.dart';
+import 'package:lw_seller/settings/settings.dart';
 
 class SellAccount {
   final String login;

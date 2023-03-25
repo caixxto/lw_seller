@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:lw_seller/account_manager/settings.dart';
+import 'package:lw_seller/settings/settings.dart';
 
 @LazySingleton(env: [Environment.dev, Environment.prod])
 class SettingsRepository {

@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:lw_seller/account_manager/settings.dart';
+import 'package:lw_seller/settings/settings.dart';
 import 'account.dart';
 
 @LazySingleton(env: [Environment.dev, Environment.prod])
@@ -10,7 +10,7 @@ class ToSellRepository {
         login: 'Зелёная стрела',
         password: 'SiOiJKGqF',
         settings: Settings(
-            id: 1,
+            account: 'Зелёная стрела',
             factory: '',
             age: 500,
             sex: 'sexeeeeee',

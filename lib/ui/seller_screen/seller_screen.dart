@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:lw_seller/account_manager/acc_buy_repo.dart';
 import 'package:lw_seller/account_manager/acc_sell_repo.dart';
 import 'package:lw_seller/account_manager/account.dart';
-import 'package:lw_seller/account_manager/settings.dart';
-import 'package:lw_seller/account_manager/settings_repo.dart';
+import 'package:lw_seller/settings/settings.dart';
 import 'package:lw_seller/constants.dart';
+import 'package:lw_seller/settings/settings_repo.dart';
 import 'package:lw_seller/ui/seller_screen/bloc/seller_bloc.dart';
+import 'package:lw_seller/ui/widgets/chip.dart';
+import 'package:lw_seller/ui/widgets/setting_widget.dart';
+import 'package:lw_seller/ui/widgets/text_field.dart';
 
 import '../widgets/drop_list_model.dart';
-import '../widgets/select_drop_list.dart';
 
 class SellerScreen extends StatefulWidget {
   const SellerScreen({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class SellerScreen extends StatefulWidget {
 }
 
 class _SellerScreenState extends State<SellerScreen> {
+  List<String> selected = [];
   bool _diffAccounts = false;
   final toSellRepo = ToSellRepository();
   final toBuyRepo = ToBuyRepository();
@@ -56,7 +58,7 @@ class _SellerScreenState extends State<SellerScreen> {
         return Scaffold(
           backgroundColor: Colors.black,
           appBar: AppBar(
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.orange,
             actions: [
               Row(
                 children: [
@@ -78,7 +80,7 @@ class _SellerScreenState extends State<SellerScreen> {
               children: [
                 Container(
                   width: 150,
-                  color: Colors.red,
+                  color: Color(0xff0a0a0a),
                   child: Column(
                     children: [
                       Padding(
@@ -121,10 +123,14 @@ class _SellerScreenState extends State<SellerScreen> {
                     ],
                   ),
                 ),
+                Container(
+                  width: 1,
+                  color: Colors.orange,
+                ),
                 if (_diffAccounts)
                   Container(
                     width: 200,
-                    color: Colors.orange,
+                    color: Color(0xff0a0a0a),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -165,11 +171,9 @@ class _SellerScreenState extends State<SellerScreen> {
                                   },
                                 ),
                                 SizedBox(
-                                  width: 50,
-                                  child: TextField(
-                                    controller: _horsesController,
-                                  ),
-                                )
+                                    height: 40,
+                                    width: 50,
+                                    child: SellerTextField(width: 50),)
                               ],
                             );
                           }),
@@ -178,207 +182,114 @@ class _SellerScreenState extends State<SellerScreen> {
                     ),
                   ),
                 Container(
+                  width: 1,
+                  color: Colors.orange,
+                ),
+                Container(
                   width: 500,
-                  color: Colors.deepPurple,
+                  color: Color(0xff0a0a0a),
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          const Text('Завод', style: WHITE_TEXT_STYLE),
-                          SizedBox(
-                              width: 300,
-                              child: SelectDropList(
-                                OptionItem(id: "0", title: "acco.settings.sex"),
-                                DropListModel([
-                                  OptionItem(id: "1", title: "Завод 1"),
-                                  OptionItem(id: "2", title: "Завод 2")
-                                ]),
-                                (optionItem) {
-                                  optionItemSelected = optionItem;
-                                  //factory = optionItemSelected.title;
-                                  //changeSettings();
-                                  setState(() {});
-                                },
-                              ))
+                      SettingsWidget(
+                        settingName: 'Завод',
+                        widgets: [],
+                      ),
+                      SettingsWidget(
+                        settingName: 'Возраст',
+                        widgets: [
+                          SellerTextField(width: 100),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text('Возраст', style: WHITE_TEXT_STYLE),
-                          SizedBox(
-                              width: 300,
-                              child: TextField(
-                                controller: _ageController,
-                                onEditingComplete: () {
-                                  changeSettings();
-                                },
-                              ))
+                      SettingsWidget(
+                        settingName: 'Пол',
+                        widgets: [
+                          SellerChip(
+                              title: 'Жеребец',
+                              onTap: () {
+                              },
+                              isSelected: true,
+                              icon: true),
+                          SizedBox(width: 8),
+                          SellerChip(
+                              title: 'Кобыла',
+                              onTap: () {
+                              },
+                              isSelected: false,
+                              icon: false)
                         ],
                       ),
-                      Row(
-                        children: [
-                          const Text('Пол', style: WHITE_TEXT_STYLE),
-                          SizedBox(
-                              width: 300,
-                              child: SelectDropList(
-                                OptionItem(id: "1", title: "Пол"),
-                                DropListModel([
-                                  OptionItem(id: "1", title: "Жеребец"),
-                                  OptionItem(id: "2", title: "Кобыла")
-                                ]),
-                                (optionItem) {
-                                  optionItemSelected = optionItem;
-                                  //sex = optionItem.title;
-                                  //changeSettings();
-                                  setState(() {});
-                                },
-                              ))
+                      SettingsWidget(
+                        settingName: 'Навыки',
+                        widgets: [
+                          SellerTextField(width: 100),
                         ],
                       ),
-                      Row(
-                        children: [
-                          const Text('Навыки', style: WHITE_TEXT_STYLE),
-                          SizedBox(
-                              width: 300,
-                              child: TextField(
-                                controller: _skillsController,
-                                onEditingComplete: () {changeSettings();},
-                              ))
+                      SettingsWidget(
+                        settingName: 'ГП',
+                        widgets: [
+                          SellerTextField(width: 100),
                         ],
                       ),
-                      Row(
-                        children: [
-                          const Text('ГП', style: WHITE_TEXT_STYLE),
-                          SizedBox(
-                              width: 300,
-                              child: TextField(
-                                controller: _gpController,
-                                onEditingComplete: () {changeSettings();},
-                              ))
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Text('ЧК', style: WHITE_TEXT_STYLE),
-                          SizedBox(
-                              width: 300,
-                              child: Checkbox(
-                                value: false,
-                                onChanged: (bool? value) {},
-                              ))
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Text('Порода', style: WHITE_TEXT_STYLE),
-                          SizedBox(
-                              width: 300,
-                              child: SelectDropList(
-                                OptionItem(id: "2", title: "Порода"),
-                                DropListModel([
-                                  OptionItem(
-                                      id: "1",
-                                      title: "Английская чистокровная"),
-                                  OptionItem(
-                                      id: "2",
-                                      title: "Лошадь лузитанской породы")
-                                ]),
-                                (optionItem) {
-                                  optionItemSelected = optionItem;
-                                  race = optionItem.title;
-                                  changeSettings();
-                                  setState(() {});
-                                },
-                              ))
-                        ],
-                      ),
-                      if (!_diffAccounts)
-                        Row(
-                          children: [
-                            const Text('Тип продажи', style: WHITE_TEXT_STYLE),
-                            SizedBox(
-                                width: 300,
-                                child: SelectDropList(
-                                  OptionItem(id: "3", title: "Тип продажи"),
-                                  DropListModel([
-                                    OptionItem(
-                                        id: "1", title: "Прямая продажа"),
-                                    OptionItem(id: "2", title: "Резерв")
-                                  ]),
-                                  (optionItem) {
-                                    optionItemSelected = optionItem;
-                                    sellType = optionItem.title;
-                                    changeSettings();
-                                    setState(() {});
-                                  },
-                                ))
-                          ],
-                        ),
-                      if (!_diffAccounts)
-                        Row(
-                          children: [
-                            const Text('Ник', style: WHITE_TEXT_STYLE),
-                            SizedBox(
-                                width: 300,
-                                child: TextField(
-                                  controller: _nickNameController,
-                                  //onEditingComplete: () {changeSettings();},
-                                  onChanged: (text) {
-                                    changeSettings();
-                                  },
+                      SettingsWidget(
+                        settingName: 'ЧК',
+                        widgets: [
 
-                                ))
-                          ],
-                        ),
-                      Row(
-                        children: [
-                          const Text('Цена', style: WHITE_TEXT_STYLE),
-                          SizedBox(
-                              width: 300,
-                              child: TextField(
-                                controller: _costController,
-                                onEditingComplete: () {changeSettings();},
-                              ))
                         ],
                       ),
-                      Row(
-                        children: [
-                          const Text('Валюта', style: WHITE_TEXT_STYLE),
-                          SizedBox(
-                              width: 300,
-                              child: SelectDropList(
-                                OptionItem(id: "2", title: "Валюта"),
-                                DropListModel([
-                                  OptionItem(id: "1", title: "Экю"),
-                                  OptionItem(id: "2", title: "Пропы")
-                                ]),
-                                (optionItem) {
-                                  optionItemSelected = optionItem;
-                                  money = optionItem.title;
-                                  changeSettings();
-                                  setState(() {});
-                                },
-                              ))
+                      SettingsWidget(
+                        settingName: 'Порода',
+                        widgets: [],
+                      ),
+                      SettingsWidget(
+                        settingName: 'Тип продажи',
+                        widgets: [
+                          SellerChip(
+                              title: 'Прямая',
+                              onTap: () {
+
+                              },
+                              isSelected: true,
+                              icon: true),
+                          SellerChip(
+                              title: 'Резерв',
+                              onTap: () {
+
+                              },
+                              isSelected: false,
+                              icon: false),
                         ],
                       ),
-                      if (!_diffAccounts)
-                        Row(
-                          children: [
-                            const Text('Кол-во лошадей',
-                                style: WHITE_TEXT_STYLE),
-                            SizedBox(
-                                width: 300,
-                                child: TextField(
-                                  controller: _horsesController,
-                                  onEditingComplete: () {changeSettings();},
-                                ))
-                          ],
-                        ),
-                      ElevatedButton(
-                          onPressed: () {
-                            print(toSellRepo.getAccounts[0].settings.nickname);
-                          },
-                          child: Text('check'))
+                      SettingsWidget(
+                        settingName: 'Ник',
+                        widgets: [
+                          SellerTextField(width: 100),
+                        ],
+                      ),
+                      SettingsWidget(
+                        settingName: 'Цена',
+                        widgets: [
+                          SellerTextField(width: 100),
+                        ],
+                      ),
+                      SettingsWidget(
+                        settingName: 'Валюта',
+                        widgets: [
+                          SellerChip(
+                              title: 'Экю',
+                              onTap: () {
+
+                              },
+                              isSelected: true,
+                              icon: true),
+                          SellerChip(
+                              title: 'Пропы',
+                              onTap: () {
+
+                              },
+                              isSelected: false,
+                              icon: false),
+                        ],
+                      ),
                     ],
                   ),
                 )
@@ -390,27 +301,27 @@ class _SellerScreenState extends State<SellerScreen> {
     );
   }
 
-  void changeSettings() {
-    final acc = toSellRepo.getAccounts[_sellIndex];
-    toSellRepo.changeSettings(
-        _sellIndex,
-        SellAccount(
-            login: acc.login,
-            password: acc.password,
-            settings: Settings(
-                id: _sellIndex,
-                factory: factory,
-                age: int.parse(_ageController.text),
-                sex: sex,
-                gp: int.parse(_gpController.text),
-                skills: int.parse(_skillsController.text),
-                chK: true,
-                race: race,
-                sellType: sellType,
-                cost: int.parse(_costController.text),
-                money: money,
-                nickname: _diffAccounts
-                    ? toBuyRepo.getAccounts[_sellIndex].login
-                    : _nickNameController.text)));
-  }
+// void changeSettings() {
+//   final acc = toSellRepo.getAccounts[_sellIndex];
+//   toSellRepo.changeSettings(
+//       _sellIndex,
+//       SellAccount(
+//           login: acc.login,
+//           password: acc.password,
+//           settings: Settings(
+//               id: _sellIndex,
+//               factory: factory,
+//               age: int.parse(_ageController.text),
+//               sex: sex,
+//               gp: int.parse(_gpController.text),
+//               skills: int.parse(_skillsController.text),
+//               chK: true,
+//               race: race,
+//               sellType: sellType,
+//               cost: int.parse(_costController.text),
+//               money: money,
+//               nickname: _diffAccounts
+//                   ? toBuyRepo.getAccounts[_sellIndex].login
+//                   : _nickNameController.text)));
+// }
 }
