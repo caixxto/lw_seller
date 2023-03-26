@@ -7,7 +7,7 @@ class ToSellRepository {
   //final List<Account> _list = List.empty(growable: true);
   final List<SellAccount> _list = [
     SellAccount(
-        login: 'Зелёная стрела',
+        login: 'Ник',
         password: 'SiOiJKGqF',
         settings: Settings(
             account: 'Зелёная стрела',
@@ -22,6 +22,55 @@ class ToSellRepository {
             cost: 500,
             money: '',
             nickname: '')),
+    SellAccount(
+        login: 'Ник1',
+        password: 'SiOiJKGqF',
+        settings: Settings(
+            account: 'Зелёная стрела',
+            factory: '',
+            age: 500,
+            sex: 'sexeeeeee',
+            gp: 500,
+            skills: 500,
+            chK: true,
+            race: '',
+            sellType: '',
+            cost: 500,
+            money: '',
+            nickname: '')),
+    SellAccount(
+        login: 'Ник2',
+        password: 'SiOiJKGqF',
+        settings: Settings(
+            account: 'Зелёная стрела',
+            factory: '',
+            age: 500,
+            sex: 'sexeeeeee',
+            gp: 500,
+            skills: 500,
+            chK: true,
+            race: '',
+            sellType: '',
+            cost: 500,
+            money: '',
+            nickname: '')),
+    SellAccount(
+        login: 'Ник3',
+        password: 'SiOiJKGqF',
+        settings: Settings(
+            account: 'Зелёная стрела',
+            factory: '',
+            age: 500,
+            sex: 'sexeeeeee',
+            gp: 500,
+            skills: 500,
+            chK: true,
+            race: '',
+            sellType: '',
+            cost: 500,
+            money: '',
+            nickname: '')),
+
     // Account(login: 'Pistol Whip', password: 'canseeclearly'),
     // Account(login: 'Oblivitron', password: 'M9I2mRX'),
   ];
