@@ -1,4 +1,6 @@
 
+import 'package:lw_seller/account_manager/factory.dart';
+
 enum SellType {
   equus,
   passes
@@ -11,13 +13,9 @@ enum HorseSex {
 
 class Settings {
   String account;
-  String factory;
+  List<Factory> factory;
   int age;
   String sex;
-  int gp;
-  int skills;
-  bool chK;
-  String race;
   String sellType;
   int cost;
   String money;
@@ -26,12 +24,8 @@ class Settings {
   Settings({
     required this.account,
     required this.factory,
-    this.age = 0,
+    required this.age,
     required this.sex,
-    this.gp = 0,
-    this.skills = 0,
-    required this.chK,
-    required this.race,
     required this.sellType,
     required this.cost,
     required this.money,
@@ -39,8 +33,3 @@ class Settings {
 
 }
 
-// class SettingsDTO {
-//   String name;
-//   String dataType;
-//   Widget widget;
-// }

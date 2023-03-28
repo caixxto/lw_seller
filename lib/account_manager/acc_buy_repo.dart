@@ -1,8 +1,9 @@
-import 'package:injectable/injectable.dart';
 import 'account.dart';
 
-@LazySingleton(env: [Environment.dev, Environment.prod])
 class ToBuyRepository {
+  static final ToBuyRepository  _instance = ToBuyRepository._();
+  ToBuyRepository._();
+  static ToBuyRepository get instance => _instance;
 
   //final List<Account> _list = List.empty(growable: true);
   final List<BuyAccount> _list = [

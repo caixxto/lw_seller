@@ -1,78 +1,25 @@
-import 'package:injectable/injectable.dart';
+import 'package:lw_seller/account_manager/factory.dart';
 import 'package:lw_seller/settings/settings.dart';
 import 'account.dart';
 
-@LazySingleton(env: [Environment.dev, Environment.prod])
 class ToSellRepository {
-  //final List<Account> _list = List.empty(growable: true);
+  static final ToSellRepository  _instance = ToSellRepository._();
+  ToSellRepository._();
+  static ToSellRepository get instance => _instance;
+  //final List<SellAccount> _list = List.empty(growable: true);
   final List<SellAccount> _list = [
     SellAccount(
-        login: 'Ник',
-        password: 'SiOiJKGqF',
+        login: 'Комондор',
+        password: 'япобедю',
         settings: Settings(
             account: 'Зелёная стрела',
-            factory: '',
-            age: 500,
-            sex: 'sexeeeeee',
-            gp: 500,
-            skills: 500,
-            chK: true,
-            race: '',
+            factory: [Factory(name: '1', id: ''), Factory(name: '2', id: ''), Factory(name: '3', id: '')],
+            age: 1,
+            sex: '234234',
             sellType: '',
-            cost: 500,
+            cost: 5200,
             money: '',
-            nickname: '')),
-    SellAccount(
-        login: 'Ник1',
-        password: 'SiOiJKGqF',
-        settings: Settings(
-            account: 'Зелёная стрела',
-            factory: '',
-            age: 500,
-            sex: 'sexeeeeee',
-            gp: 500,
-            skills: 500,
-            chK: true,
-            race: '',
-            sellType: '',
-            cost: 500,
-            money: '',
-            nickname: '')),
-    SellAccount(
-        login: 'Ник2',
-        password: 'SiOiJKGqF',
-        settings: Settings(
-            account: 'Зелёная стрела',
-            factory: '',
-            age: 500,
-            sex: 'sexeeeeee',
-            gp: 500,
-            skills: 500,
-            chK: true,
-            race: '',
-            sellType: '',
-            cost: 500,
-            money: '',
-            nickname: '')),
-    SellAccount(
-        login: 'Ник3',
-        password: 'SiOiJKGqF',
-        settings: Settings(
-            account: 'Зелёная стрела',
-            factory: '',
-            age: 500,
-            sex: 'sexeeeeee',
-            gp: 500,
-            skills: 500,
-            chK: true,
-            race: '',
-            sellType: '',
-            cost: 500,
-            money: '',
-            nickname: '')),
-
-    // Account(login: 'Pistol Whip', password: 'canseeclearly'),
-    // Account(login: 'Oblivitron', password: 'M9I2mRX'),
+            nickname: '222')),
   ];
 
   List<SellAccount> get getAccounts => _list;
@@ -81,8 +28,11 @@ class ToSellRepository {
 
   void deleteAccount(int index) => _list.removeAt(index);
 
-  void changeSettings(int index, element) {
-    _list.removeAt(index);
-    _list.insert(index, element);
+  void changeSettings(int index, Settings settings) {
+    final login = _list[index].login;
+    final password = _list[index].password;
+    _list.removeAt(index).settings;
+    _list.insert(index, SellAccount(login: login, password: password, settings: settings));
 }
+
 }

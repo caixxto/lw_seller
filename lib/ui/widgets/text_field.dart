@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lw_seller/constants.dart';
 
 class SellerTextField extends StatelessWidget {
-  SellerTextField({Key? key, required this.width, }) : super(key: key);
+  SellerTextField({Key? key, required this.width, required this.controller}) : super(key: key);
   final double width;
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class SellerTextField extends StatelessWidget {
       key: _formKey,
       width: width,
       child: TextFormField(
-        controller: _controller,
+        controller: controller,
         autovalidateMode: AutovalidateMode.always,
         validator: (text) {
           if (text == null || text.isEmpty) {
