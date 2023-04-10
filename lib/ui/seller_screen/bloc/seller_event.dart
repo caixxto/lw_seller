@@ -5,14 +5,21 @@ abstract class SellerEvent{}
 
 class SettingsChangedEvent extends SellerEvent {}
 
-class UpdateScreenEvent extends SellerEvent {}
-
-class SaveSettingsEvent extends SellerEvent {
+class UpdateScreenEvent extends SellerEvent {
   final int index;
-  final Settings settings;
-
-  SaveSettingsEvent({required this.settings, required this.index});
+  UpdateScreenEvent({required this.index});
 }
 
-class StartEvent extends SellerEvent {}
+class SaveAccountEvent extends SellerEvent {
+  final AccountInfo info;
+  final int index;
+  SaveAccountEvent({required this.info, required this.index});
+}
+
+class ClearAccountEvent extends SellerEvent {}
+
+class StartFilterEvent extends SellerEvent {
+  final AccountInfo account;
+  StartFilterEvent({required this.account});
+}
 

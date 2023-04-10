@@ -2,58 +2,51 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SellerChip extends StatefulWidget {
-  const SellerChip({
-    super.key,
-    required this.title,
-    required this.onTap,
-    required this.isSelected,
-    required this.icon
-  });
+  String title;
+  Function(String) onSelected;
+  final List<String> titleList;
 
-  final String title;
-  final void Function() onTap;
-  final bool isSelected;
-  final bool icon;
+  SellerChip({
+    super.key,
+    required this.onSelected,
+    required this.title,
+    required this.titleList,
+  });
 
   @override
   State<SellerChip> createState() => _SellerChipState();
 }
 
 class _SellerChipState extends State<SellerChip> {
+
+  List<Widget> choiceChips() {
+    int selectedIndex = widget.titleList.indexOf(widget.title);
+    List<Widget> chips = [];
+    for (int i = 0; i < widget.titleList.length; i++) {
+      Widget item = Padding(
+        padding: const EdgeInsets.only(left: 10, right: 5),
+        child: ChoiceChip(
+          label: Text(widget.titleList[i]),
+          avatar: selectedIndex == i ? const Icon(Icons.check, color: Colors.white, size: 16) : null,
+          labelStyle: const TextStyle(color: Colors.white),
+          backgroundColor: Colors.black,
+          selected: selectedIndex == i,
+          selectedColor: Colors.orange,
+          onSelected: (bool value) {
+              selectedIndex = i;
+              widget.onSelected(widget.titleList[selectedIndex]);
+          },
+        ),
+      );
+      chips.add(item);
+    }
+    return chips;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ActionChip(
-        label: widget.isSelected && widget.icon
-            ? Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.check,
-              size: 18.0,
-              color: Colors.orange,
-            ),
-            const SizedBox(width: 4),
-            Text(widget.title),
-          ],
-        )
-            : Text(widget.title),
-        elevation: widget.isSelected ? 0 : 3,
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-        backgroundColor: widget.isSelected
-            ? Colors.black
-            : Colors.orange,
-        labelStyle: widget.isSelected
-            ? const TextStyle(
-            color: Colors.orange,
-            fontWeight: FontWeight.w500,
-            fontSize: 16.0)
-            : const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-            fontSize: 16.0),
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0))),
-        shadowColor: Colors.orange,
-        onPressed: () => widget.onTap()
+    return Row(
+      children: choiceChips(),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:html/parser.dart';
 import 'package:lw_seller/account_manager/factory.dart';
+import 'package:lw_seller/settings/parse.dart';
 
 class Network {
   static Dio dio = Dio();
@@ -22,8 +23,7 @@ class Network {
         followRedirects: false,
         validateStatus: (status) {
           return true;
-        }
-    ));
+        }));
   }
 
   //TODO: refactor cringe code
@@ -48,6 +48,7 @@ class Network {
 
     return code;
   }
+
   String c2(response) {
     RegExp exp = RegExp("id=\"authentification(.{5})\" type");
     RegExpMatch? match = exp.firstMatch(response.data);
@@ -75,37 +76,33 @@ class Network {
 
     dio.interceptors.add(CookieManager(CookieJar()));
 
-    var firstResponse = await dio.get(
-        "https://www.lowadi.com");
+    var firstResponse = await dio.get("https://www.lowadi.com");
     final data = firstResponse;
 
     await Future.delayed(const Duration(seconds: 1), () async {
-      var loginResponse = await dio.post(
-          "https://www.lowadi.com/site/doLogIn",
-          data: FormData.fromMap(
-              {
-                c(data): c2(data),
-                'login': login,
-                'password': password,
-                'redirection': '',
-                'isBoxStyle': ''
-              }
-          ));
+      var loginResponse = await dio.post("https://www.lowadi.com/site/doLogIn",
+          data: FormData.fromMap({
+            c(data): c2(data),
+            'login': login,
+            'password': password,
+            'redirection': '',
+            'isBoxStyle': ''
+          }));
       ex = loginResponse.headers.toString().contains('hasLoggedIn');
-
     });
 
     return ex ? false : true;
   }
 
   Future<List<Factory>> getFactory() async {
-    var response = await dio.get('https://www.lowadi.com/elevage/chevaux/?elevage=all-horses');
+    var response = await dio
+        .get('https://www.lowadi.com/elevage/chevaux/?elevage=all-horses');
     final document = parse(response.data);
     final factories = document.querySelector("#tab-all-breeding")!.children;
     factories.removeLast();
     final List<Factory> list = [];
 
-    for(var i = 0; i < factories.length; i++) {
+    for (var i = 0; i < factories.length; i++) {
       final factory = factories[i];
       final name = factory.text.trim();
       final id = factory.id.trim().replaceAll('tab-select-', '');
@@ -115,4 +112,22 @@ class Network {
     return list;
   }
 
+  getFilterHorses(data) async {
+    var filterResponse = await dio.post("https://www.lowadi.com/elevage/chevaux/searchHorse",
+        options: Options(headers: {"Content-Type":"application/json"}),
+        data: FormData.fromMap({
+          'go': '1',
+          'forceReset': 'true'
+        }
+        ));
+    print(filterResponse.toString());
+    // final document = parse(await filterResponse.data);
+    // final pages = document.querySelector('.pageNumbering ul')!.children;
+    //
+    // for (var element in pages) {
+    //   {
+    //   print(element.text);
+    // };
+    // }
+  }
 }

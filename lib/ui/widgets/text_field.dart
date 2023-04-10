@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lw_seller/constants.dart';
 
 class SellerTextField extends StatelessWidget {
-  SellerTextField({Key? key, required this.width, required this.controller}) : super(key: key);
+  final void Function(String) onChanged;
+  SellerTextField({Key? key, required this.width, required this.controller, required this.onChanged}) : super(key: key);
   final double width;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController controller;
@@ -13,6 +14,7 @@ class SellerTextField extends StatelessWidget {
       key: _formKey,
       width: width,
       child: TextFormField(
+        onChanged: onChanged,
         controller: controller,
         autovalidateMode: AutovalidateMode.always,
         validator: (text) {

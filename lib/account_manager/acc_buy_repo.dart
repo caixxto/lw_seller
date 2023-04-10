@@ -5,11 +5,11 @@ class ToBuyRepository {
   ToBuyRepository._();
   static ToBuyRepository get instance => _instance;
 
-  //final List<Account> _list = List.empty(growable: true);
-  final List<BuyAccount> _list = [
-    BuyAccount(login: 'Ник', password: 'amzfljamzflj', horses: 500),
-    //BuyAccount(login: 'Oblivitron', password: 'M9I2mRX'),
-  ];
+  final List<BuyAccount> _list = List.empty(growable: true);
+  // final List<BuyAccount> _list = [
+  //   BuyAccount(login: 'Ник', password: 'amzfljamzflj', horses: 500),
+  //   //BuyAccount(login: 'Oblivitron', password: 'M9I2mRX'),
+  // ];
 
   List<BuyAccount> get getAccounts => _list;
 

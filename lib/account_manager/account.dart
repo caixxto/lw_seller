@@ -1,12 +1,9 @@
-import 'package:equatable/equatable.dart';
-import 'package:lw_seller/settings/settings.dart';
 
 class SellAccount {
   final String login;
   final String password;
-  final Settings settings;
 
-  const SellAccount({required this.login, required this.password, required this.settings});
+  const SellAccount({required this.login, required this.password});
 }
 
 class BuyAccount {
